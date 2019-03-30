@@ -31,7 +31,8 @@ export default class ProductContainer extends Component {
   handleFetchingProducts = () => {
     let url = String().concat(
       "http://test-api.edfa3ly.io/product",
-      ProductsManager.getCurrentlySelectedCategoryId()
+      ProductsManager.getCurrentlySelectedCategoryId(),
+      "&_sort=name&_order=asc"
     );
 
     fetch(url)
@@ -103,7 +104,8 @@ export default class ProductContainer extends Component {
     let url = String().concat(
       "http://test-api.edfa3ly.io/product",
       ProductsManager.getCurrentlySelectedCategoryId(),
-      filterString
+      filterString,
+      "&_sort=name&_order=asc"
     );
 
     fetch(url)
