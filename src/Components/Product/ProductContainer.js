@@ -1,17 +1,19 @@
 import React, { Component } from "react";
 import { Row, Col } from "react-bootstrap";
 import LinearProgress from "@material-ui/core/LinearProgress";
+import Typography from "@material-ui/core/Typography";
 import ProductsManager from "../../Managers/ProductsManager";
 import ProductComponent from "./ProductComponent";
 
-let linearProgressStyle = { flexGrow: 1, marginRight: "33%" };
+let linearProgressStyle = { flexGrow: 1, marginRight: "5%", marginLeft: "5%" };
 
 export default class ProductContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
       products: [],
-      loading: false
+      loading: false,
+      errorMessage: ""
     };
     ProductsManager.setLoadingTrigger(this.handleLoading);
     ProductsManager.setFetchingProductsTrigger(this.handleFetchingProducts);
@@ -62,6 +64,9 @@ export default class ProductContainer extends Component {
           );
         });
 
+        //show filter section
+        ProductsManager.executeShowFilterSection(true);
+
         //for price filter
         ProductsManager.executeRefreshPriceFilterComponent(minPrice, maxPrice);
 
@@ -78,11 +83,19 @@ export default class ProductContainer extends Component {
         //stop loading and render the products
         this.setState({
           loading: false,
-          products: productsArray
+          products: productsArray,
+          errorMessage:
+            productsArray.length === 0
+              ? "No Items were found, Please choose another category."
+              : ""
         });
       })
       .catch(error => {
         console.log(error);
+        this.setState({
+          loading: false,
+          errorMessage: "An error occurred, Please try again."
+        });
       });
   };
 
@@ -110,17 +123,33 @@ export default class ProductContainer extends Component {
         //stop loading and render the products
         this.setState({
           loading: false,
-          products: productsArray
+          products: productsArray,
+          errorMessage:
+            productsArray.length === 0
+              ? "No Items were found, Please change your selected filter(s)."
+              : ""
         });
       })
       .catch(error => {
         console.log(error);
+        this.setState({
+          loading: false,
+          errorMessage: "An error occurred, Please try again."
+        });
       });
   };
 
   render() {
     if (this.state.loading)
       return <LinearProgress style={linearProgressStyle} />;
+    else if (this.state.errorMessage !== "")
+      return (
+        <Col md={8}>
+          <Typography variant="title" align="center">
+            {this.state.errorMessage}
+          </Typography>
+        </Col>
+      );
     return this.state.products.length !== 0 ? (
       <Col md={8}>
         <Row>{this.state.products}</Row>
