@@ -8,6 +8,11 @@ class HelperManager {
     // fallback image in case image prop was corrupted
     return "https://www.edfa3ly.com/build/static/Edfa3ly/images/footer-logo-edfa3ly.png";
   };
+
+  //a method to capitalize the first letter of a string
+  capitalizeFirstLetter = text => {
+    return String().concat(text.charAt(0).toUpperCase(), text.slice(1));
+  };
 }
 
 const HelperManagerInstance = new HelperManager();
