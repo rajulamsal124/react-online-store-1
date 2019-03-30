@@ -13,6 +13,12 @@ class HelperManager {
   capitalizeFirstLetter = text => {
     return String().concat(text.charAt(0).toUpperCase(), text.slice(1));
   };
+
+  //a method to validate numeric strings
+  validateNumericStrings = text => {
+    var regex = /^[0-9]+$/;
+    return regex.test(text);
+  };
 }
 
 const HelperManagerInstance = new HelperManager();
