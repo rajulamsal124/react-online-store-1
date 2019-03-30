@@ -17,8 +17,6 @@ let cardMediaStyle = {
 
 let cardContentStyle = {
   textAlign: "center",
-  height: "45px",
-  paddingTop: "10px",
   fontWeight: "500"
 };
 
