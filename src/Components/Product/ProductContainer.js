@@ -15,6 +15,9 @@ export default class ProductContainer extends Component {
     };
     ProductsManager.setLoadingTrigger(this.handleLoading);
     ProductsManager.setFetchingProductsTrigger(this.handleFetchingProducts);
+    ProductsManager.setFetchingFilteredProductsTrigger(
+      this.handleFilteringProducts
+    );
   }
 
   handleLoading = flag => {
@@ -33,14 +36,43 @@ export default class ProductContainer extends Component {
       .then(response => response.json())
       .then(data => {
         let productsArray = [];
+        let colors = new Set(); // to get unique values only to populate the color filter
+        let ratings = new Set(); // to get unique values only to populate the rating filter
+        let minPrice; //to get lowest price
+        let maxPrice; //to get highest price
 
         //populate array with results
-        data.map(obj =>
+        data.map((obj, index) => {
+          //to get prices for price filter
+          if (index === 0) {
+            minPrice = obj.price;
+            maxPrice = obj.price;
+          } else {
+            if (obj.price < minPrice) minPrice = obj.price;
+            else if (obj.price > maxPrice) maxPrice = obj.price;
+          }
+
+          colors.add(obj.color);
+          ratings.add(obj.rating);
+
           productsArray.push(
             <Col md={4} key={obj.id}>
               <ProductComponent product={obj} />
             </Col>
-          )
+          );
+        });
+
+        //for price filter
+        ProductsManager.executeRefreshPriceFilterComponent(minPrice, maxPrice);
+
+        //for color filter
+        let colorsArray = [...colors];
+        ProductsManager.executeRefreshColorFilterComponent(colorsArray.sort());
+
+        //for rating filter
+        let ratingsArray = [...ratings];
+        ProductsManager.executeRefreshRatingFilterComponent(
+          ratingsArray.sort().reverse()
         );
 
         //stop loading and render the products
@@ -53,6 +85,39 @@ export default class ProductContainer extends Component {
         console.log(error);
       });
   };
+
+  handleFilteringProducts = filterString => {
+    let url = String().concat(
+      "http://test-api.edfa3ly.io/product",
+      ProductsManager.getCurrentlySelectedCategoryId(),
+      filterString
+    );
+
+    fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        let productsArray = [];
+
+        //populate array with results
+        data.map(obj => {
+          productsArray.push(
+            <Col md={4} key={obj.id}>
+              <ProductComponent product={obj} />
+            </Col>
+          );
+        });
+
+        //stop loading and render the products
+        this.setState({
+          loading: false,
+          products: productsArray
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
   render() {
     if (this.state.loading)
       return <LinearProgress style={linearProgressStyle} />;
