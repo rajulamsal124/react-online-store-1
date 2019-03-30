@@ -6,6 +6,8 @@ let refreshPriceFilterComponent = undefined;
 let refreshColorFilterComponent = undefined;
 let refreshRatingFilterComponent = undefined;
 
+let showFilterSectionTrigger = undefined;
+
 let fetchingFilteredProductsTrigger = undefined;
 let filter = {};
 
@@ -39,6 +41,7 @@ class ProductsManager {
   setCurrentlySelectedCategory = category => {
     currentlySelectedCategory = category;
     this.clearFilter(); //clear previous filters
+    this.executeShowFilterSection(false);
     this.executeRefreshPriceFilterComponent(undefined, undefined); //clear previously set price filter values
     this.executeRefreshColorFilterComponent([]); //clear previously set color filter values
     this.executeRefreshRatingFilterComponent([]); //clear previously set rating filter values
@@ -121,6 +124,14 @@ class ProductsManager {
       filterString += String().concat("&", key, "=", filter[key]);
     }
     return filterString;
+  };
+
+  setShowFilterSectionTrigger = callback => {
+    showFilterSectionTrigger = callback;
+  };
+
+  executeShowFilterSection = flag => {
+    if (showFilterSectionTrigger !== undefined) showFilterSectionTrigger(flag);
   };
 }
 
