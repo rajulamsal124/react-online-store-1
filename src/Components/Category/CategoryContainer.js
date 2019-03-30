@@ -27,7 +27,7 @@ export default class CategoryContainer extends Component {
         //populate array with results
         data.map(obj =>
           categoriesArray.push(
-            <Col>
+            <Col key={obj.id}>
               <CategoryComponent category={obj} />
             </Col>
           )
