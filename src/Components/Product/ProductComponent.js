@@ -27,6 +27,12 @@ let priceAndRatingStyle = {
   height: "20px"
 };
 
+let colorStyle = {
+  display: "flex",
+  flexDirection: "row",
+  height: "20px"
+};
+
 export default class ProductComponent extends Component {
   constructor(props) {
     super(props);
@@ -46,12 +52,31 @@ export default class ProductComponent extends Component {
           </Typography>
           <div style={priceAndRatingStyle}>
             <Typography variant="body2">
-              {String().concat(this.product.price, " ", this.product.currency)}
+              {this.product.price.toLocaleString(undefined, {
+                style: "currency",
+                currency: this.product.currency
+              })}
             </Typography>
             <StarRatingComponent
               name={String(this.product.id)}
               editing={false}
               value={this.product.rating}
+            />
+          </div>
+          <div style={colorStyle}>
+            <Typography variant="body2">Color: </Typography>
+            <div
+              style={{
+                borderRadius: "10px",
+                width: "15px",
+                height: "15px",
+                background: this.product.color,
+                borderWidth: "1px",
+                borderColor: "black",
+                borderStyle: "solid",
+                marginTop: "5px",
+                marginLeft: "5px"
+              }}
             />
           </div>
         </CardContent>
