@@ -99,13 +99,13 @@ export default class ProductContainer extends Component {
         let productsArray = [];
 
         //populate array with results
-        data.map(obj => {
+        data.map(obj =>
           productsArray.push(
             <Col md={4} key={obj.id}>
               <ProductComponent product={obj} />
             </Col>
-          );
-        });
+          )
+        );
 
         //stop loading and render the products
         this.setState({
