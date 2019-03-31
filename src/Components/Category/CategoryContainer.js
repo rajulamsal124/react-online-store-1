@@ -27,7 +27,7 @@ export default class CategoryContainer extends Component {
         //populate array with results
         data.map(obj =>
           categoriesArray.push(
-            <Col key={obj.id}>
+            <Col md={2} key={obj.id}>
               <CategoryComponent category={obj} />
             </Col>
           )
@@ -46,7 +46,13 @@ export default class CategoryContainer extends Component {
     return (
       <div style={containerStyle}>
         <h1 style={headerStyle}>Please choose a product category</h1>
-        <Row>{this.state.categories}</Row>
+        <Row
+          style={{
+            justifyContent: "space-Evenly"
+          }}
+        >
+          {this.state.categories}
+        </Row>
       </div>
     );
   }

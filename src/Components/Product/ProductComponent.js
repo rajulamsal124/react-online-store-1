@@ -47,7 +47,12 @@ export default class ProductComponent extends Component {
           style={cardMediaStyle}
         />
         <CardContent style={cardContentStyle}>
-          <Typography gutterBottom noWrap variant="title">
+          <Typography
+            gutterBottom
+            noWrap
+            variant="subTitle"
+            style={{ fontWeight: "bold" }}
+          >
             {this.product.name}
           </Typography>
           <div style={priceAndRatingStyle}>
