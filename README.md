@@ -20,17 +20,17 @@ I've used the singleton pattern and created a manager class that will be respons
 
 There are three main parent components:
 
-###CategoryContainer
+### CategoryContainer
 This container is responsible for fetching the product categories.
 
-###ProductContainer
+### ProductContainer
 This container is responsible for fetching filtered products, please note that the `id` of the category selected from the previous container is used to fetch the products.
 
-###FilterContainer
+### FilterContainer
 This container contains all the filteration componenets used, each component boundries/ limits are populated based on the retrieved products in the previous container.
 Whenever the user applies any filter(s), a method in the products container is triggered to fetch the new products without removing/ destroying the previously set boundries/ limits.
 
-##Shortcomings
+## Shortcomings
 1- The retrieved products are not paged, which is not optimal.  
 2- This project doesn't provide any localization options, all the strings/ texts are in English and can't be changed.
 
