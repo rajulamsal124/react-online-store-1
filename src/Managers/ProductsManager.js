@@ -11,6 +11,8 @@ let showFilterSectionTrigger = undefined;
 let fetchingFilteredProductsTrigger = undefined;
 let filter = {};
 
+let defaultSortingMethod = "&_sort=name&_order=asc";
+
 class ProductsManager {
   //set a callback to the loading trigger in products container
   setLoadingTrigger = callback => {
@@ -42,6 +44,7 @@ class ProductsManager {
     currentlySelectedCategory = category;
     this.clearFilter(); //clear previous filters
     this.executeShowFilterSection(false);
+    this.resetDefaultSortingMethod(); //resets default sorting method to be by name in ascending order
     this.executeRefreshPriceFilterComponent(undefined, undefined); //clear previously set price filter values
     this.executeRefreshColorFilterComponent([]); //clear previously set color filter values
     this.executeRefreshRatingFilterComponent([]); //clear previously set rating filter values
@@ -132,6 +135,19 @@ class ProductsManager {
 
   executeShowFilterSection = flag => {
     if (showFilterSectionTrigger !== undefined) showFilterSectionTrigger(flag);
+  };
+
+  //used to set a sorting method
+  setDefaultSortingMethod = sortingMethod => {
+    defaultSortingMethod = sortingMethod;
+  };
+
+  getDefaultSortingMethod = () => {
+    return defaultSortingMethod;
+  };
+
+  resetDefaultSortingMethod = () => {
+    defaultSortingMethod = "&_sort=name&_order=asc";
   };
 }
 

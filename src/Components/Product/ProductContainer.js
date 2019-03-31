@@ -4,6 +4,7 @@ import LinearProgress from "@material-ui/core/LinearProgress";
 import Typography from "@material-ui/core/Typography";
 import ProductsManager from "../../Managers/ProductsManager";
 import ProductComponent from "./ProductComponent";
+import SortingComponent from "../Sort/SortingComponent";
 
 let linearProgressStyle = { flexGrow: 1, marginRight: "5%", marginLeft: "5%" };
 
@@ -32,7 +33,7 @@ export default class ProductContainer extends Component {
     let url = String().concat(
       "http://test-api.edfa3ly.io/product",
       ProductsManager.getCurrentlySelectedCategoryId(),
-      "&_sort=name&_order=asc"
+      ProductsManager.getDefaultSortingMethod()
     );
 
     fetch(url)
@@ -65,21 +66,30 @@ export default class ProductContainer extends Component {
           );
         });
 
-        //show filter section
-        ProductsManager.executeShowFilterSection(true);
+        //will only show the filter section
+        //if the category contains products
+        if (productsArray.length !== 0) {
+          //show filter section
+          ProductsManager.executeShowFilterSection(true);
 
-        //for price filter
-        ProductsManager.executeRefreshPriceFilterComponent(minPrice, maxPrice);
+          //for price filter
+          ProductsManager.executeRefreshPriceFilterComponent(
+            minPrice,
+            maxPrice
+          );
 
-        //for color filter
-        let colorsArray = [...colors];
-        ProductsManager.executeRefreshColorFilterComponent(colorsArray.sort());
+          //for color filter
+          let colorsArray = [...colors];
+          ProductsManager.executeRefreshColorFilterComponent(
+            colorsArray.sort()
+          );
 
-        //for rating filter
-        let ratingsArray = [...ratings];
-        ProductsManager.executeRefreshRatingFilterComponent(
-          ratingsArray.sort().reverse()
-        );
+          //for rating filter
+          let ratingsArray = [...ratings];
+          ProductsManager.executeRefreshRatingFilterComponent(
+            ratingsArray.sort().reverse()
+          );
+        }
 
         //stop loading and render the products
         this.setState({
@@ -105,7 +115,7 @@ export default class ProductContainer extends Component {
       "http://test-api.edfa3ly.io/product",
       ProductsManager.getCurrentlySelectedCategoryId(),
       filterString,
-      "&_sort=name&_order=asc"
+      ProductsManager.getDefaultSortingMethod()
     );
 
     fetch(url)
@@ -154,6 +164,7 @@ export default class ProductContainer extends Component {
       );
     return this.state.products.length !== 0 ? (
       <Col md={8}>
+        <SortingComponent />
         <Row>{this.state.products}</Row>
       </Col>
     ) : (
