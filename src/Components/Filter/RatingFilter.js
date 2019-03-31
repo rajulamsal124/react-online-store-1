@@ -47,13 +47,17 @@ export default class RatingFilter extends Component {
     if (this.state.ratingsList !== []) {
       let arr = [];
       arr.push(
-        <MenuItem value="">
+        <MenuItem value="" key="norating">
           <em>None</em>
         </MenuItem>
       );
 
       this.state.ratingsList.map(rating =>
-        arr.push(<MenuItem value={rating}>{rating}</MenuItem>)
+        arr.push(
+          <MenuItem value={rating} key={rating}>
+            {rating}
+          </MenuItem>
+        )
       );
 
       return arr;

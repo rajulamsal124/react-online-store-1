@@ -39,12 +39,24 @@ export default class SortingComponent extends Component {
     //static options
 
     let arr = [
-      <MenuItem value="&_sort=name&_order=asc">Name</MenuItem>,
-      <MenuItem value="&_sort=rating&_order=desc">Highest Rated</MenuItem>,
-      <MenuItem value="&_sort=rating&_order=asc">Lowest Rated</MenuItem>,
-      <MenuItem value="&_sort=price&_order=desc">Highest Price</MenuItem>,
-      <MenuItem value="&_sort=price&_order=asc">Lowest Price</MenuItem>,
-      <MenuItem value="&_sort=releaseDate&_order=desc">Recently Added</MenuItem>
+      <MenuItem value="&_sort=name&_order=asc" key="nameAsc">
+        Name
+      </MenuItem>,
+      <MenuItem value="&_sort=rating&_order=desc" key="rateDesc">
+        Highest Rated
+      </MenuItem>,
+      <MenuItem value="&_sort=rating&_order=asc" key="rateAsc">
+        Lowest Rated
+      </MenuItem>,
+      <MenuItem value="&_sort=price&_order=desc" key="priceDesc">
+        Highest Price
+      </MenuItem>,
+      <MenuItem value="&_sort=price&_order=asc" key="priceAsc">
+        Lowest Price
+      </MenuItem>,
+      <MenuItem value="&_sort=releaseDate&_order=desc" key="dateDesc">
+        Recently Added
+      </MenuItem>
     ];
     return arr;
   };

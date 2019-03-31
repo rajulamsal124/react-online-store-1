@@ -48,14 +48,14 @@ export default class ColorFilter extends Component {
     if (this.state.colorList !== []) {
       let arr = [];
       arr.push(
-        <MenuItem value="">
+        <MenuItem value="" key="nocolor">
           <em>None</em>
         </MenuItem>
       );
 
       this.state.colorList.map(color =>
         arr.push(
-          <MenuItem value={color}>
+          <MenuItem value={color} key={color}>
             {HelperManager.capitalizeFirstLetter(color)}
           </MenuItem>
         )
