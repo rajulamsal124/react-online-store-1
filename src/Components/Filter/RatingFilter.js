@@ -24,9 +24,11 @@ export default class RatingFilter extends Component {
   }
 
   handleChange = event => {
-    this.setState({ selectedRating: event.target.value });
-    ProductsManager.addFilter("rating", event.target.value);
-    ProductsManager.executeFetchingFilteredProductsTrigger();
+    if (this.state.selectedRating !== event.target.value) {
+      this.setState({ selectedRating: event.target.value });
+      ProductsManager.addFilter("rating", event.target.value);
+      ProductsManager.executeFetchingFilteredProductsTrigger();
+    }
   };
 
   handleClose = () => {

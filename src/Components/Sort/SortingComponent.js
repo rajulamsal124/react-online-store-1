@@ -22,9 +22,11 @@ export default class SortingComponent extends Component {
   }
 
   handleChange = event => {
-    this.setState({ selectedSortingMethod: event.target.value });
-    ProductsManager.setDefaultSortingMethod(event.target.value);
-    ProductsManager.executeFetchingFilteredProductsTrigger();
+    if (this.state.selectedSortingMethod !== event.target.value) {
+      this.setState({ selectedSortingMethod: event.target.value });
+      ProductsManager.setDefaultSortingMethod(event.target.value);
+      ProductsManager.executeFetchingFilteredProductsTrigger();
+    }
   };
 
   handleClose = () => {

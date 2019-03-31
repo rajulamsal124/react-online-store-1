@@ -25,9 +25,11 @@ export default class ColorFilter extends Component {
   }
 
   handleChange = event => {
-    this.setState({ selectedColor: event.target.value });
-    ProductsManager.addFilter("color", event.target.value);
-    ProductsManager.executeFetchingFilteredProductsTrigger();
+    if (this.state.selectedColor !== event.target.value) {
+      this.setState({ selectedColor: event.target.value });
+      ProductsManager.addFilter("color", event.target.value);
+      ProductsManager.executeFetchingFilteredProductsTrigger();
+    }
   };
 
   handleClose = () => {
