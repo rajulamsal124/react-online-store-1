@@ -1,68 +1,37 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+# React-Online-Store
 
-In the project directory, you can run:
+In this small project, I'm focusing on building the frontend of a single page
+in an online store, the cataloge page will be containing product categories, products as well as some
+filters that could be applied to narrow down your search.
 
-### `npm start`
+## Getting Started
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+To make sure that all the packages are installed, run `npm install` in the terminal of the project's directory.
+Once done installing the packages, simply type `npm start` to run the project.
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+This project is using [Material-UI](https://material-ui.com/), follow the link to know more about the library.
+The API used to feed the components with the required data is [Edfa3ly's test API](http://test-api.edfa3ly.io/)
 
-### `npm test`
+## Architectural Approach
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+My main focus was to minimize the number of unnecessary calls to the API that might be triggered mistakenly, as well as minimizing any setting of the state in containers (parent components) and instead focusing on manipulating the state of child componenets, if needed.
+I've used the singleton pattern and created a manager class that will be responsible for executing any logic needed between components, this approach was helpful in particular when I was populating the Filteration components (Price, Color and Rating), as well as executing the triggers of other components.
 
-### `npm run build`
+There are three main parent components:
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+###CategoryContainer
+This container is responsible for fetching the product categories.
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+###ProductContainer
+This container is responsible for fetching filtered products, please note that the `id` of the category selected from the previous container is used to fetch the products.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+###FilterContainer
+This container contains all the filteration componenets used, each component boundries/ limits are populated based on the retrieved products in the previous container.
+Whenever the user applies any filter(s), a method in the products container is triggered to fetch the new products without removing/ destroying the previously set boundries/ limits.
 
-### `npm run eject`
+##Shortcomings
+1- The retrieved products are not paged, which is not optimal.  
+2- This project doesn't provide any localization options, all the strings/ texts are in English and can't be changed.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
